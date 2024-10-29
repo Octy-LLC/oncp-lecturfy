@@ -130,9 +130,7 @@ fun LoginScreen(
             modifier =
             Modifier
 
-                .fillMaxWidth(1f)
-
-                .fillMaxHeight(0.47f),
+                .fillMaxWidth(1f),
         ) {
 
             AsyncImage(
@@ -142,7 +140,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .align(BiasAlignment(horizontalBias = 0f, verticalBias = 0.33f))
                     .fillMaxWidth()
-                    .padding(start = 19.dp, end = 19.dp),
+                    .padding(start = 19.dp, end = 19.dp, bottom = 26.dp, top = 56.dp),
             )
         }
 
