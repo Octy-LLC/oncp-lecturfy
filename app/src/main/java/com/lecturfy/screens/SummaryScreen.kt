@@ -185,7 +185,9 @@ fun SummaryScreen(
                 ),
         ) {
             Button(
-                onClick = label@{ },
+                onClick = label@{
+                    navController.navigateUp()
+                },
                 modifier =
                 Modifier
                     .border(
@@ -227,14 +229,7 @@ fun SummaryScreen(
                 )
             }
             Button(
-                onClick = label@{
-                    coroutineScope.launch {
-                        val transcriptionId = navController.currentBackStackEntry?.arguments?.getString("id") ?: ""
-                        navController.navigate(
-                            "Summary/${transcriptionId}"
-                        )
-                    }
-                },
+                onClick = label@{},
                 modifier =
                 Modifier
                     .padding(start = 15.dp)
