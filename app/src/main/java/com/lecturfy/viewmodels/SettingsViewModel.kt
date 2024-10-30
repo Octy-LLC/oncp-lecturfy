@@ -1,35 +1,31 @@
 package com.lecturfy.viewmodels
 
-import androidx.lifecycle.SavedStateHandle
+import android.content.Context
 import android.content.SharedPreferences
-import android.net.Uri
 import androidx.compose.material3.SnackbarDuration
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
-import dagger.hilt.android.qualifiers.ApplicationContext
-import android.content.Context
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import okhttp3.ResponseBody
-import retrofit2.Response
-import kotlinx.coroutines.flow.Flow
-import kotlin.coroutines.suspendCoroutine
-import kotlinx.coroutines.CompletableDeferred
-import kotlin.coroutines.resume
-import com.lecturfy.components.utils.FileUtils
-import com.lecturfy.components.utils.FileResult
 import com.lecturfy.components.google.GoogleSignInHelper
 import com.lecturfy.components.google.GoogleSignInRequest
 import com.lecturfy.components.system.NavController
 import com.lecturfy.components.system.NavControllerViewModelDirectionEnum
 import com.lecturfy.components.system.SnackbarEntity
-import com.lecturfy.repositories.UsersettingsRepository
+import com.lecturfy.entities.UsergetprofileEntity
+import com.lecturfy.entities.UserprofileEntity
+import com.lecturfy.entities.UsersettingsEntity
 import com.lecturfy.repositories.UserprofileRepository
-import com.lecturfy.entities.*
+import com.lecturfy.repositories.UsersettingsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import retrofit2.Response
+import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 data class SettingsViewModelState (
   val userProfile: UsergetprofileEntity = UsergetprofileEntity(
@@ -102,10 +98,6 @@ class SettingsViewModel @Inject constructor (
       }
     }
     else {
-      setNavController(
-          "LogIn"
-      )
-      
     }
     }
   }
