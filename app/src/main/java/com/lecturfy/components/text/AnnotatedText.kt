@@ -3,6 +3,7 @@ package com.lecturfy.components.text
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +32,7 @@ fun AnnotatedText(
     lineHeight: Dp = Dp.Unspecified,
     fontSize: TextUnit = 16.sp,
     fontWeight: FontWeight = FontWeight.Normal,
-    color: Color = Color.Black
+    color: Color = Color.Black,
 ) {
     val context = LocalContext.current
     val lineHeightSp = lineHeight.takeIf { it != Dp.Unspecified }?.let {
@@ -66,23 +67,36 @@ fun AnnotatedText(
             }
         }
     }
-
-    ClickableText(
-        text = annotatedString,
-        modifier = modifier,
-        style = TextStyle(
-            textAlign = textAlign,
-            fontSize = fontSize,
-            fontWeight = fontWeight,
-            color = color,
-            lineHeight = lineHeightSp ?: fontSize // fallback if lineHeight is unspecified
-        ),
-        onClick = { offset ->
-            annotatedString.getStringAnnotations(tag = "URL", start = offset, end = offset)
-                .firstOrNull()?.let { annotation ->
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(annotation.item))
-                    context.startActivity(intent)
-                }
-        }
-    )
+    if (parts.any { it is AnnotatedTextPart.LinkPart }) {
+        ClickableText(
+            text = annotatedString,
+            modifier = modifier,
+            style = TextStyle(
+                textAlign = textAlign,
+                fontSize = fontSize,
+                fontWeight = fontWeight,
+                color = color,
+                lineHeight = lineHeightSp ?: fontSize // fallback if lineHeight is unspecified
+            ),
+            onClick = { offset ->
+                annotatedString.getStringAnnotations(tag = "URL", start = offset, end = offset)
+                    .firstOrNull()?.let { annotation ->
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(annotation.item))
+                        context.startActivity(intent)
+                    }
+            }
+        )
+    } else {
+        Text(
+            text = annotatedString,
+            modifier = modifier,
+            style = TextStyle(
+                textAlign = textAlign,
+                fontSize = fontSize,
+                fontWeight = fontWeight,
+                color = color,
+                lineHeight = lineHeightSp ?: fontSize // fallback if lineHeight is unspecified
+            ),
+        )
+    }
 }
