@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -196,8 +197,7 @@ fun TranscriptionScreen(
                         color = AppTheme.colors.accentColor2,
                         shape = RoundedCornerShape(8.dp),
                     )
-                    .height(40.dp)
-                ,
+                    .height(40.dp),
                 shape = RoundedCornerShape(8.dp),
                 contentPadding = PaddingValues(),
 
@@ -300,6 +300,46 @@ fun TranscriptionScreen(
             }
         ) { webView ->
             webView.loadUrl(state.transcription.linkToFile)
+        }
+        Button(
+            onClick = label@{
+                coroutineScope.launch {
+                    val accessTokenLocal = sharedPreferences.getString("accessTokenLocal", "emptyToken")!!
+                    val transcriptionId = navController.currentBackStackEntry?.arguments?.getString("id") ?: ""
+                    viewModel.transcriptionsmakeSummary(
+                        idPathParam = transcriptionId,
+                        authorizationHeaderParam = accessTokenLocal,
+                    )
+
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 20.dp, bottom = 16.dp),
+            shape = CircleShape,
+            contentPadding = PaddingValues(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = AppTheme.colors.accentColor2,
+            ),
+            elevation = ButtonDefaults.buttonElevation(
+
+            ),
+        ) {
+            AnnotatedText(
+                parts = listOf(
+                    AnnotatedTextPart.TextPart(
+                        "Make summary"
+                    )
+                ),
+                modifier =
+                Modifier
+                    .padding(vertical = 18.dp)
+                ,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
+                lineHeight = 20.dp,
+                color = AppTheme.colors.accentColor1,
+            )
         }
     }
 }
