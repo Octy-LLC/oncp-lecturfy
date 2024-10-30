@@ -251,7 +251,7 @@ fun SettingsScreen(
 
                     .padding(
                         top = 10.dp,
-                        bottom = 10.dp,
+                        bottom = 34.dp,
                     ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
